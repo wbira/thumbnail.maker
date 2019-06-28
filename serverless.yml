@@ -1,0 +1,19 @@
+
+service: thumbnail-maker
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-central-1
+  stage: dev
+
+functions:
+  thumbnail:
+    handler: handler.thumbnail
+    events:
+        - s3:
+          bucket: wb-s3-thumbnail-storage
+          event: s3:ObjectCreated:*
+          rules:
+            - suffix: .txt
+
